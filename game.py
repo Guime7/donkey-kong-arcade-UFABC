@@ -77,6 +77,7 @@ class GameView(arcade.View):
         self.cavaleiro_sprite = arcade.Sprite(
             "assets/cavaleiroFixo.png", 1,
         )
+        
         # Starting position of the player
         self.cavaleiro_sprite.center_x = 180
         self.cavaleiro_sprite.center_y = 485
