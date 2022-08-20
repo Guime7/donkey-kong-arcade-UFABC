@@ -32,6 +32,7 @@ class GameView(arcade.View):
         # Sprite lists
         self.player_list = None
         self.enemy_list = None
+        self.cavaleiro_list = None
 
         # Physics lists
         self.physics_engine_enemy_list = None
@@ -40,6 +41,7 @@ class GameView(arcade.View):
 
         # Set up the player
         self.player_sprite = None
+        self.cavaleiro_sprite = None
         self.enemy_sprite = None
 
 
@@ -58,17 +60,28 @@ class GameView(arcade.View):
         # Sprite lists
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
+        self.cavaleiro_list = arcade.SpriteList()
         self.physics_engine_enemy_list = []
+
         # Set up the player
         self.player_sprite = arcade.Sprite(
             "assets/playerFixo.png", 1,
         )
         # Starting position of the player
         self.player_sprite.center_x = 180
-        self.player_sprite.center_y = 70
+        self.player_sprite.center_y = 50
         self.player_sprite.boundary_bottom = -550
         self.player_list.append(self.player_sprite)
    
+        # Set up the cavaleiro
+        self.cavaleiro_sprite = arcade.Sprite(
+            "assets/cavaleiroFixo.png", 1,
+        )
+        # Starting position of the player
+        self.cavaleiro_sprite.center_x = 180
+        self.cavaleiro_sprite.center_y = 485
+        self.cavaleiro_list.append(self.cavaleiro_sprite)
+
         # Estrutura das plataformas
         map_name = "assets/map.json"
         layer_options = {
@@ -123,6 +136,7 @@ class GameView(arcade.View):
         # Draw all the sprites.
         self.player_list.draw()
         self.enemy_list.draw()
+        self.cavaleiro_list.draw()
         # esconder as plataformas que dão fisica
         # self.wall_list.draw()
 
@@ -173,7 +187,7 @@ class GameView(arcade.View):
             self.enemy_sprite = arcade.Sprite("assets/barrilFixo.png", 1.5)
 
             self.enemy_sprite.center_x = 180
-            self.enemy_sprite.center_y = 500
+            self.enemy_sprite.center_y = 510
 
             # Set enemy initial speed
             self.enemy_sprite.change_x = 5

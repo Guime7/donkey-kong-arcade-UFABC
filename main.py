@@ -33,6 +33,13 @@ class MainView(arcade.View):
         game_view = game.GameView()
         game_view.setup()
         self.window.show_view(game_view)
+        
+    def on_key_press(self, key, modifiers):
+        """ Use a mouse press to advance to the 'game' view. """
+        if key == arcade.key.ENTER:
+            game_view = game.GameView()
+            game_view.setup()
+            self.window.show_view(game_view)
 
 def main():
     """ Startup """
