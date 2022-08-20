@@ -11,7 +11,7 @@ Constantes
 """
 # Player
 TILE_SCALING = 2
-PLAYER_SCALING = 0.2
+PLAYER_SCALING = 1
 
 #Tela
 SCREEN_WIDTH = 832
@@ -44,6 +44,7 @@ class MyGame(arcade.Window):
         self.player_list = None
         self.wall_list = None
         self.enemy_list = None
+        self.physics_engine_enemy_list = None
 
         # Set up the player
         self.score = 0
@@ -61,6 +62,8 @@ class MyGame(arcade.Window):
 
         self.background = None
 
+        self.walls = None
+
     def setup(self):
         """Set up the game and initialize the variables."""
         self.game_over = False
@@ -68,9 +71,10 @@ class MyGame(arcade.Window):
         # Sprite lists
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
+        self.physics_engine_enemy_list = []
         # Set up the player
         self.player_sprite = arcade.Sprite(
-            ":resources:images/animated_characters/female_person/femalePerson_idle.png",
+            "assets/playerFixo.png",
             PLAYER_SCALING,
         )
         # Starting position of the player
@@ -107,29 +111,16 @@ class MyGame(arcade.Window):
         #     "assets/barrilFixo.png",
         #     PLAYER_SCALING,
         # )
-
-        self.enemy_sprite = arcade.Sprite("assets/barrilFixo.png", 1.5)
-
-        self.enemy_sprite.center_x = 180
-        self.enemy_sprite.center_y = 500
-
-        # Set enemy initial speed
-        self.enemy_sprite.change_x = 5
-       
-        # Set boundaries on the left/right the enemy can't cross
-        self.enemy_sprite.boundary_right = 680
-        self.enemy_sprite.boundary_left = 140
-        self.enemy_list.append(self.enemy_sprite)
-
+        
+      
          # Keep player from running through the wall_list layer
-        walls = [self.wall_list]
+        self.walls = [self.wall_list]
         self.physics_engine = arcade.PhysicsEnginePlatformer(
-            self.player_sprite, walls, gravity_constant=GRAVITY
+            self.player_sprite, self.walls, gravity_constant=GRAVITY
         )
 
-        self.physics_engine_enemy = arcade.PhysicsEnginePlatformer(
-            self.enemy_sprite, walls, gravity_constant=GRAVITY
-        )
+       
+   
 
     def on_draw(self):
         """
@@ -204,6 +195,29 @@ class MyGame(arcade.Window):
         elif key == arcade.key.RIGHT:
             self.player_sprite.change_x = MOVEMENT_SPEED
 
+
+        if key == arcade.key.SPACE and len(self.enemy_list) < 5:          
+            self.enemy_sprite = arcade.Sprite("assets/barrilFixo.png", 1.5)
+
+            self.enemy_sprite.center_x = 180
+            self.enemy_sprite.center_y = 500
+
+            # Set enemy initial speed
+            self.enemy_sprite.change_x = 5
+            # Set boundaries on the left/right the enemy can't cross
+            self.enemy_sprite.boundary_right = 680
+            self.enemy_sprite.boundary_left = 140  
+            self.enemy_sprite.boundary_bottom = -350
+            self.physics_engine_enemy = arcade.PhysicsEnginePlatformer(
+                self.enemy_sprite, self.walls, gravity_constant=GRAVITY
+            )
+            
+            self.physics_engine_enemy_list.append(self.physics_engine_enemy)
+            self.enemy_list.append(self.enemy_sprite)
+           
+
+           
+
     def on_key_release(self, key, modifiers):
         """
         Called when the user presses a mouse button.
@@ -215,8 +229,8 @@ class MyGame(arcade.Window):
     def on_update(self, delta_time):
         """Movement and game logic"""
 
-        # self.enemy_list.update()
-
+        # Loop through each bullet
+    
             # Check each enemy
         for enemy in self.enemy_list:
             # If the enemy hit a wall, reverse
@@ -229,15 +243,34 @@ class MyGame(arcade.Window):
             elif enemy.boundary_right is not None and enemy.right > enemy.boundary_right:
                 enemy.change_x *= -1
 
+             # Check this bullet to see if it hit a coin
+            # hit_list = arcade.check_for_collision_with_list(enemy, self.player_list)
+
+            # # If it did, get rid of the bullet
+            # if len(hit_list) > 0:
+            #     enemy.remove_from_sprite_lists()
+
+            # For every coin we hit, add to the score and remove the coin
+            # for coin in hit_list:
+            #     coin.remove_from_sprite_lists()
+            #     self.score += 1
+
+            #     # Hit Sound
+            #     arcade.play_sound(self.hit_sound)
+
+            # If the bullet flies off-screen, remove it.
+            if enemy.bottom < enemy.boundary_bottom:
+                enemy.remove_from_sprite_lists()
+
 
         # if self.player_sprite.right >= self.end_of_map:
         #     self.game_over = True
 
         # # Call update on all sprites
         # if not self.game_over:
-        #     self.physics_engine.update()
         self.physics_engine.update()
-        self.physics_engine_enemy.update()
+        for i in self.physics_engine_enemy_list:
+            i.update()
 
         # coins_hit = arcade.check_for_collision_with_list(
         #     self.player_sprite, self.coin_list
