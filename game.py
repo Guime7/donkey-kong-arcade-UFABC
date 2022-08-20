@@ -14,7 +14,7 @@ TILE_SCALING = 2
 # Physics
 MOVEMENT_SPEED = 5
 JUMP_SPEED = 15
-GRAVITY = 1.1
+GRAVITY = 1
 
 class GameView(arcade.View):
     """Main application class."""
@@ -33,20 +33,24 @@ class GameView(arcade.View):
         self.player_list = None
         self.enemy_list = None
         self.cavaleiro_list = None
+        self.vitoria_list = None
 
         # Physics lists
         self.physics_engine_enemy_list = None
         self.physics_engine_enemy = None
         self.physics_engine = None
+        self.physics_engine_vitoria = None
 
         # Set up the player
         self.player_sprite = None
         self.cavaleiro_sprite = None
         self.enemy_sprite = None
+        self.vitoria_sprite = None
 
 
         self.score = 0
         self.game_over = False
+        self.game_win = False
         self.last_time = None
         self.frame_count = 0
         self.fps_message = None
@@ -60,6 +64,7 @@ class GameView(arcade.View):
         # Sprite lists
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
+        self.vitoria_list = arcade.SpriteList()
         self.cavaleiro_list = arcade.SpriteList()
         self.physics_engine_enemy_list = []
 
@@ -77,11 +82,22 @@ class GameView(arcade.View):
         self.cavaleiro_sprite = arcade.Sprite(
             "assets/cavaleiroFixo.png", 1,
         )
-        
+
         # Starting position of the player
         self.cavaleiro_sprite.center_x = 180
         self.cavaleiro_sprite.center_y = 485
         self.cavaleiro_list.append(self.cavaleiro_sprite)
+
+         # Set up the vitoria
+        self.vitoria_sprite = arcade.Sprite(
+            "assets/barrilAVitoria.png", 1.5,
+        )
+
+        # Starting position of the player
+        self.vitoria_sprite.center_x = 375
+        self.vitoria_sprite.center_y = 600
+        self.vitoria_list.append(self.vitoria_sprite)
+        
 
         # Estrutura das plataformas
         map_name = "assets/map.json"
@@ -119,6 +135,9 @@ class GameView(arcade.View):
         self.physics_engine = arcade.PhysicsEnginePlatformer(
             self.player_sprite, self.walls, gravity_constant=GRAVITY
         )
+        self.physics_engine_vitoria = arcade.PhysicsEnginePlatformer(
+            self.vitoria_sprite, self.walls, gravity_constant=GRAVITY
+        )
 
     def on_draw(self):
         """
@@ -138,6 +157,7 @@ class GameView(arcade.View):
         self.player_list.draw()
         self.enemy_list.draw()
         self.cavaleiro_list.draw()
+        self.vitoria_list.draw()
         # esconder as plataformas que dão fisica
         # self.wall_list.draw()
 
@@ -209,6 +229,11 @@ class GameView(arcade.View):
         game_over_view = GameOverView(self)
         self.window.show_view(game_over_view)
 
+    def gameWin(self):
+        """ Use a mouse press to advance to the 'game' view. """
+        game_win_view = GameWinView(self)
+        self.window.show_view(game_win_view)
+
     def on_key_release(self, key, modifiers):
         """
         Called when the user presses a mouse button.
@@ -221,7 +246,15 @@ class GameView(arcade.View):
         """Movement and game logic"""
 
         # Loop through each bullet
-        if not self.game_over:
+        if not self.game_over and not self.game_win:
+
+            # Generate a list of all sprites that collided with the player.
+            hit_list_vitoria = arcade.check_for_collision_with_list(self.player_sprite, self.vitoria_list)
+
+            # Loop through each colliding sprite, remove it, and add to the score.
+            for win in hit_list_vitoria:
+                self.game_win = True
+
 
             if self.player_sprite.bottom < self.player_sprite.boundary_bottom:
                 self.game_over = True
@@ -248,9 +281,13 @@ class GameView(arcade.View):
                     enemy.remove_from_sprite_lists()
 
             self.physics_engine.update()
+            self.physics_engine_vitoria.update()
             for i in self.physics_engine_enemy_list:
                 i.update()
 
         # em caso de gameOver        
+        elif self.game_win:
+            self.gameWin()
+
         else:
             self.gameOver()

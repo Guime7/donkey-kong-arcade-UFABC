@@ -106,5 +106,9 @@
         "teste.tsx"
     ],
     "tileset.embedInMap": true,
-    "tileset.type": 1
+    "tileset.tileSize": {
+        "height": 1,
+        "width": 1
+    },
+    "tileset.type": 0
 }
