@@ -267,6 +267,8 @@ class MyGame(arcade.Window):
             for i in self.physics_engine_enemy_list:
                 i.update()
 
+            #teste
+
             # coins_hit = arcade.check_for_collision_with_list(
             #     self.player_sprite, self.coin_list
             # )
