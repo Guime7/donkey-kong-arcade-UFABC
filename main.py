@@ -10,10 +10,6 @@ import game
 """
 Constantes
 """
-# Player
-TILE_SCALING = 2
-PLAYER_SCALING = 1
-
 #Tela
 SCREEN_WIDTH = 832
 SCREEN_HEIGHT = 640

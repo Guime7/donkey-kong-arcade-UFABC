@@ -11,11 +11,6 @@ from main import *
 """
 Constantes
 """
-
-#Tela
-SCREEN_WIDTH = 832
-SCREEN_HEIGHT = 640
-SCREEN_TITLE = "Donkey-Arcade-UFABC"
 # Physics
 class GameOverView(arcade.View):
     def __init__(self, game_view):
