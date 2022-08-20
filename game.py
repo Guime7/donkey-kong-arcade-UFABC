@@ -20,6 +20,10 @@ SCREEN_TITLE = "Donkey-Arcade-UFABC"
 SPRITE_PIXEL_SIZE = 128
 GRID_PIXEL_SIZE = SPRITE_PIXEL_SIZE * TILE_SCALING
 
+SPRITE_SCALING_ENEMY = 0.2
+SPRITE_NATIVE_SIZE = 64
+SPRITE_SIZE_ENEMY = int(SPRITE_NATIVE_SIZE * SPRITE_SCALING_ENEMY)
+
 # Physics
 MOVEMENT_SPEED = 5
 JUMP_SPEED = 15
@@ -39,12 +43,17 @@ class MyGame(arcade.Window):
         # Sprite lists
         self.player_list = None
         self.wall_list = None
+        self.enemy_list = None
 
         # Set up the player
         self.score = 0
         self.player_sprite = None
+        self.enemy_sprite = None
+        self.view_left = 0
+        self.view_bottom = 0
 
         self.physics_engine = None
+        self.physics_engine_enemy = None
         self.game_over = False
         self.last_time = None
         self.frame_count = 0
@@ -54,9 +63,11 @@ class MyGame(arcade.Window):
 
     def setup(self):
         """Set up the game and initialize the variables."""
+        self.game_over = False
+
         # Sprite lists
         self.player_list = arcade.SpriteList()
-
+        self.enemy_list = arcade.SpriteList()
         # Set up the player
         self.player_sprite = arcade.Sprite(
             ":resources:images/animated_characters/female_person/femalePerson_idle.png",
@@ -86,13 +97,39 @@ class MyGame(arcade.Window):
         
         self.background = arcade.load_texture("assets/background.png")
 
-        # Keep player from running through the wall_list layer
-        walls = [self.wall_list, ]
+        # -- Draw an enemy on the ground
+        # self.enemy_sprite = arcade.AnimatedTimeBasedSprite()
+        # self.enemy_sprite.textures = []
+
+        # for i in range(7):
+        # self.enemy_sprite.textures.append(arcade.load_texture("assets/barril.png", x=0,y=0,width=28,height=20))
+        # self.enemy_sprite = arcade.Sprite(
+        #     "assets/barrilFixo.png",
+        #     PLAYER_SCALING,
+        # )
+
+        self.enemy_sprite = arcade.Sprite("assets/barrilFixo.png", 1.5)
+
+        self.enemy_sprite.center_x = 180
+        self.enemy_sprite.center_y = 500
+
+        # Set enemy initial speed
+        self.enemy_sprite.change_x = 5
+       
+        # Set boundaries on the left/right the enemy can't cross
+        self.enemy_sprite.boundary_right = 680
+        self.enemy_sprite.boundary_left = 140
+        self.enemy_list.append(self.enemy_sprite)
+
+         # Keep player from running through the wall_list layer
+        walls = [self.wall_list]
         self.physics_engine = arcade.PhysicsEnginePlatformer(
             self.player_sprite, walls, gravity_constant=GRAVITY
         )
 
-        self.game_over = False
+        self.physics_engine_enemy = arcade.PhysicsEnginePlatformer(
+            self.enemy_sprite, walls, gravity_constant=GRAVITY
+        )
 
     def on_draw(self):
         """
@@ -100,7 +137,7 @@ class MyGame(arcade.Window):
         """
         # self.camera.use()
         self.clear()
-
+        arcade.start_render()
         # render background
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             SCREEN_WIDTH, SCREEN_HEIGHT,
@@ -111,6 +148,7 @@ class MyGame(arcade.Window):
 
         # Draw all the sprites.
         self.player_list.draw()
+        self.enemy_list.draw()
         # esconder as plataformas que dão fisica
         # self.wall_list.draw()
 
@@ -173,8 +211,24 @@ class MyGame(arcade.Window):
         if key == arcade.key.LEFT or key == arcade.key.RIGHT:
             self.player_sprite.change_x = 0
 
+
     def on_update(self, delta_time):
         """Movement and game logic"""
+
+        # self.enemy_list.update()
+
+            # Check each enemy
+        for enemy in self.enemy_list:
+            # If the enemy hit a wall, reverse
+            # if len(arcade.check_for_collision_with_list(enemy, self.wall_list)) > 0:
+            #     enemy.change_x *= -1
+            # If the enemy hit the left boundary, reverse
+            if enemy.boundary_left is not None and enemy.left < enemy.boundary_left:
+                enemy.change_x *= -1
+            # If the enemy hit the right boundary, reverse
+            elif enemy.boundary_right is not None and enemy.right > enemy.boundary_right:
+                enemy.change_x *= -1
+
 
         # if self.player_sprite.right >= self.end_of_map:
         #     self.game_over = True
@@ -183,6 +237,7 @@ class MyGame(arcade.Window):
         # if not self.game_over:
         #     self.physics_engine.update()
         self.physics_engine.update()
+        self.physics_engine_enemy.update()
 
         # coins_hit = arcade.check_for_collision_with_list(
         #     self.player_sprite, self.coin_list

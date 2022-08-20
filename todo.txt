@@ -7,3 +7,4 @@
 []  animar o playerr para subir as escadas
 []  Extra: inverter o lado dos jogadores caso o q esta subindo perca 
 []  limpar o codigo
+[]  reiniciar o jogo e animação de derrota

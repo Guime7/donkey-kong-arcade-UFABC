@@ -1,0 +1,84 @@
+{
+    "activeFile": "",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "#background": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "#fdsafs": {
+            "scaleInDock": 1
+        },
+        "#fghhjf": {
+            "scaleInDock": 0.015625
+        },
+        "#nvbnc": {
+            "scaleInEditor": 1
+        },
+        "#teste": {
+            "scaleInDock": 1
+        },
+        "#teste4": {
+            "scaleInDock": 1
+        },
+        "#testete": {
+            "scaleInDock": 1
+        },
+        "#yete": {
+            "dynamicWrapping": true
+        },
+        "Novo.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "map.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -23.33333333333337,
+                "y": 16.666666666666657
+            }
+        },
+        "map.tmx#background": {
+            "scaleInDock": 1
+        },
+        "map.tmx#yet": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "teste.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1.5
+        },
+        "teste2.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "teste3.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "teste4.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 3
+        }
+    },
+    "openFiles": [
+        "map.tmx"
+    ],
+    "project": "map.tiled-project",
+    "recentFiles": [
+        "map.tmx",
+        "Novo.tsx",
+        "teste4.tsx",
+        "teste3.tsx",
+        "teste2.tsx",
+        "teste.tsx"
+    ]
+}
