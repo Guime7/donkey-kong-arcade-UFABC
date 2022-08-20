@@ -5,6 +5,7 @@ import time
 import arcade
 import os
 import random
+from gameOverScreen import *
 
 """
 Constantes
@@ -16,7 +17,7 @@ PLAYER_SCALING = 1
 #Tela
 SCREEN_WIDTH = 832
 SCREEN_HEIGHT = 640
-SCREEN_TITLE = "Donkey-Arcade-UFABC"
+# SCREEN_TITLE = "Donkey-Arcade-UFABC"
 SPRITE_PIXEL_SIZE = 128
 GRID_PIXEL_SIZE = SPRITE_PIXEL_SIZE * TILE_SCALING
 
@@ -29,13 +30,14 @@ MOVEMENT_SPEED = 5
 JUMP_SPEED = 15
 GRAVITY = 1.1
 
-class MyGame(arcade.Window):
+class GameView(arcade.View):
     """Main application class."""
     def __init__(self):
         """
         Initializer
         """
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+        super().__init__()
+        # super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
         # Tilemap Object
         self.tile_map = None
@@ -189,7 +191,7 @@ class MyGame(arcade.Window):
             self.player_sprite.change_x = MOVEMENT_SPEED
 
 
-        if key == arcade.key.SPACE and len(self.enemy_list) < 5:          
+        if key == arcade.key.SPACE and len(self.enemy_list) < 6:          
             self.enemy_sprite = arcade.Sprite("assets/barrilFixo.png", 1.5)
 
             self.enemy_sprite.center_x = 180
@@ -209,7 +211,10 @@ class MyGame(arcade.Window):
             self.enemy_list.append(self.enemy_sprite)
            
 
-           
+    def gameOver(self):
+        """ Use a mouse press to advance to the 'game' view. """
+        game_over_view = GameOverView(self)
+        self.window.show_view(game_over_view)
 
     def on_key_release(self, key, modifiers):
         """
@@ -273,13 +278,14 @@ class MyGame(arcade.Window):
             # for coin in coins_hit:
             #     coin.remove_from_sprite_lists()
             #     self.score += 1
+        else:
+            self.gameOver()
             
+# def main():
+#     window = MyGame()
+#     window.setup()
+#     arcade.run()
 
-def main():
-    window = MyGame()
-    window.setup()
-    arcade.run()
 
-
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
