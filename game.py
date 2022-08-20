@@ -166,19 +166,12 @@ class MyGame(arcade.Window):
         # self.wall_list.draw_hit_boxes()
         # self.wall_list_objects.draw_hit_boxes()
 
-        # Get distance and draw text
-        distance = self.player_sprite.right
-        output = f"Distance: {distance}"
-        arcade.draw_text(
-            output, 10, 20, arcade.color.BLACK, 14
-        )
-
         # Draw game over text if condition met
         if self.game_over:
             arcade.draw_text(
                 "Game Over",
-                200,
-                200,
+                SCREEN_WIDTH/2,
+                SCREEN_HEIGHT/2,
                 arcade.color.BLACK,
                 30,
             )
@@ -230,54 +223,56 @@ class MyGame(arcade.Window):
         """Movement and game logic"""
 
         # Loop through each bullet
-    
+        if not self.game_over:
             # Check each enemy
-        for enemy in self.enemy_list:
-            # If the enemy hit a wall, reverse
-            # if len(arcade.check_for_collision_with_list(enemy, self.wall_list)) > 0:
-            #     enemy.change_x *= -1
-            # If the enemy hit the left boundary, reverse
-            if enemy.boundary_left is not None and enemy.left < enemy.boundary_left:
-                enemy.change_x *= -1
-            # If the enemy hit the right boundary, reverse
-            elif enemy.boundary_right is not None and enemy.right > enemy.boundary_right:
-                enemy.change_x *= -1
+            for enemy in self.enemy_list:
+                # If the enemy hit a wall, reverse
+                # if len(arcade.check_for_collision_with_list(enemy, self.wall_list)) > 0:
+                #     enemy.change_x *= -1
+                # If the enemy hit the left boundary, reverse
+                if enemy.boundary_left is not None and enemy.left < enemy.boundary_left:
+                    enemy.change_x *= -1
+                # If the enemy hit the right boundary, reverse
+                elif enemy.boundary_right is not None and enemy.right > enemy.boundary_right:
+                    enemy.change_x *= -1
 
-             # Check this bullet to see if it hit a coin
-            # hit_list = arcade.check_for_collision_with_list(enemy, self.player_list)
+                # Check this bullet to see if it hit a coin
+                hit_list = arcade.check_for_collision_with_list(enemy, self.player_list)
 
-            # # If it did, get rid of the bullet
-            # if len(hit_list) > 0:
-            #     enemy.remove_from_sprite_lists()
+                # If it did, get rid of the bullet
+                if len(hit_list) > 0:
+                    enemy.remove_from_sprite_lists()
+                    self.game_over = True
 
-            # For every coin we hit, add to the score and remove the coin
-            # for coin in hit_list:
+
+                # For every coin we hit, add to the score and remove the coin
+                # for barril in hit_list:
+                #     enemy.remove_from_sprite_lists()
+                    # self.score += 1
+
+                    # Hit Sound
+                    # arcade.play_sound(self.hit_sound)
+
+                # If the bullet flies off-screen, remove it.
+                if enemy.bottom < enemy.boundary_bottom:
+                    enemy.remove_from_sprite_lists()
+
+
+            # if self.player_sprite.right >= self.end_of_map:
+            #     self.game_over = True
+
+            # # Call update on all sprites
+            # if not self.game_over:
+            self.physics_engine.update()
+            for i in self.physics_engine_enemy_list:
+                i.update()
+
+            # coins_hit = arcade.check_for_collision_with_list(
+            #     self.player_sprite, self.coin_list
+            # )
+            # for coin in coins_hit:
             #     coin.remove_from_sprite_lists()
             #     self.score += 1
-
-            #     # Hit Sound
-            #     arcade.play_sound(self.hit_sound)
-
-            # If the bullet flies off-screen, remove it.
-            if enemy.bottom < enemy.boundary_bottom:
-                enemy.remove_from_sprite_lists()
-
-
-        # if self.player_sprite.right >= self.end_of_map:
-        #     self.game_over = True
-
-        # # Call update on all sprites
-        # if not self.game_over:
-        self.physics_engine.update()
-        for i in self.physics_engine_enemy_list:
-            i.update()
-
-        # coins_hit = arcade.check_for_collision_with_list(
-        #     self.player_sprite, self.coin_list
-        # )
-        # for coin in coins_hit:
-        #     coin.remove_from_sprite_lists()
-        #     self.score += 1
 
 def main():
     window = MyGame()
