@@ -4,7 +4,9 @@
 [ok]  programar as ações de derrota do player ao tocar no barril e cair no buraco
 [despriorizado]  score para conta qnts barril pulou
 []  animar e programar o "segundo player" que vai jogar os barril
-[]  animar o playerr para subir as escadas
-[]  Extra: inverter o lado dos jogadores caso o q esta subindo perca 
+[ok]  animar o playerr para subir as escadas
+[despriorizado]  Extra: inverter o lado dos jogadores caso o q esta subindo perca 
+[ok]  reiniciar o jogo e animação de derrota
 []  limpar o codigo
-[]  reiniciar o jogo e animação de derrota
+[]  arrumar as telas de inicio e fim de game
+[]  adicionar sons

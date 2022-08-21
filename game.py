@@ -13,7 +13,7 @@ TILE_SCALING = 2
 
 # Physics
 MOVEMENT_SPEED = 5
-JUMP_SPEED = 15
+JUMP_SPEED = 13.5
 GRAVITY = 1
 
 class GameView(arcade.View):
@@ -28,6 +28,8 @@ class GameView(arcade.View):
         self.tile_map = None
         self.walls = None
         self.wall_list = None
+        self.escada = None
+        self.escada_list = None
 
         # Sprite lists
         self.player_list = None
@@ -70,7 +72,7 @@ class GameView(arcade.View):
 
         # Set up the player
         self.player_sprite = arcade.Sprite(
-            "assets/playerFixo.png", 1,
+            "assets/playerFixo.png", 0.9,
         )
         # Starting position of the player
         self.player_sprite.center_x = 180
@@ -102,7 +104,8 @@ class GameView(arcade.View):
         # Estrutura das plataformas
         map_name = "assets/map.json"
         layer_options = {
-            "caminho": {"use_spatial_hash": True}
+            "caminho": {"use_spatial_hash": True},
+            "escada": {"use_spatial_hash": True}
         }
         # Read in the tiled map
         self.tile_map = arcade.load_tilemap(
@@ -110,6 +113,7 @@ class GameView(arcade.View):
         )    
         # Set wall and coin SpriteLists
         self.wall_list = self.tile_map.sprite_lists["caminho"]
+        self.escada_list = self.tile_map.sprite_lists["escada"]
 
         # --- Other stuff
         # Set the background color    
@@ -132,12 +136,16 @@ class GameView(arcade.View):
       
          # Keep player from running through the wall_list layer
         self.walls = [self.wall_list]
+        self.escada = [self.escada_list]
         self.physics_engine = arcade.PhysicsEnginePlatformer(
-            self.player_sprite, self.walls, gravity_constant=GRAVITY
+            self.player_sprite, self.walls, gravity_constant=GRAVITY,
+            ladders= self.escada,
         )
+
         self.physics_engine_vitoria = arcade.PhysicsEnginePlatformer(
-            self.vitoria_sprite, self.walls, gravity_constant=GRAVITY
+            self.vitoria_sprite, self.walls, gravity_constant=GRAVITY,           
         )
+        
 
     def on_draw(self):
         """
@@ -160,6 +168,7 @@ class GameView(arcade.View):
         self.vitoria_list.draw()
         # esconder as plataformas que dão fisica
         # self.wall_list.draw()
+        # self.escada_list.draw()
 
         # Calculate FPS if conditions are met
         if self.last_time and self.frame_count % 60 == 0:
@@ -194,9 +203,18 @@ class GameView(arcade.View):
         """
         Called whenever a key is pressed.
         """
+        # if key == arcade.key.UP:
+        #     if self.physics_engine.can_jump():
+        #         self.player_sprite.change_y = JUMP_SPEED
         if key == arcade.key.UP:
-            if self.physics_engine.can_jump():
+            if self.physics_engine.is_on_ladder():
+                self.player_sprite.change_y = MOVEMENT_SPEED
+            elif self.physics_engine.can_jump():
                 self.player_sprite.change_y = JUMP_SPEED
+                # arcade.play_sound(self.jump_sound)
+        elif key == arcade.key.DOWN:
+            if self.physics_engine.is_on_ladder():
+                self.player_sprite.change_y = -MOVEMENT_SPEED
         elif key == arcade.key.LEFT:
             self.player_sprite.change_x = -MOVEMENT_SPEED
         elif key == arcade.key.RIGHT:
@@ -238,7 +256,13 @@ class GameView(arcade.View):
         """
         Called when the user presses a mouse button.
         """
-        if key == arcade.key.LEFT or key == arcade.key.RIGHT:
+        if key == arcade.key.UP:
+            if self.physics_engine.is_on_ladder():
+                self.player_sprite.change_y = 0
+        elif key == arcade.key.DOWN:
+            if self.physics_engine.is_on_ladder():
+                self.player_sprite.change_y = 0
+        elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
             self.player_sprite.change_x = 0
 
 
