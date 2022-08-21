@@ -5,6 +5,8 @@ import time
 import arcade
 from gameOver import *
 import barril
+import cavaleiro
+import player
 """
 Constantes
 """
@@ -15,6 +17,7 @@ TILE_SCALING = 2
 MOVEMENT_SPEED = 5
 JUMP_SPEED = 13.5
 GRAVITY = 1
+
 
 class GameView(arcade.View):
     """Main application class."""
@@ -73,9 +76,10 @@ class GameView(arcade.View):
         self.physics_engine_enemy_list = []
 
         # Set up the player
-        self.player_sprite = arcade.Sprite(
-            "assets/playerFixo.png", 0.9,
-        )
+        # self.player_sprite = arcade.Sprite(
+        #     "assets/playerFixo.png", 0.9,
+        # )
+        self.player_sprite = player.PlayerCharacter()
         # Starting position of the player
         self.player_sprite.center_x = 180
         self.player_sprite.center_y = 50
@@ -84,12 +88,13 @@ class GameView(arcade.View):
    
         # Set up the cavaleiro
         self.cavaleiro_sprite = arcade.Sprite(
-            "assets/cavaleiroFixo.png", 1,
+            "assets/cavaleiro_3.png", 1.2,
         )
+        # self.cavaleiro_sprite = cavaleiro.CavaleiroCharacter()
 
         # Starting position of the player
         self.cavaleiro_sprite.center_x = 180
-        self.cavaleiro_sprite.center_y = 485
+        self.cavaleiro_sprite.center_y = 490
         self.cavaleiro_list.append(self.cavaleiro_sprite)
 
          # Set up the vitoria
@@ -209,14 +214,15 @@ class GameView(arcade.View):
             self.player_sprite.change_x = -MOVEMENT_SPEED
         elif key == arcade.key.RIGHT:
             self.player_sprite.change_x = MOVEMENT_SPEED
-           
-
+        
+        
     def gameOver(self):
-        """ Use a mouse press to advance to the 'game' view. """
+        time.sleep(1)
         game_over_view = GameOverView(self)
         self.window.show_view(game_over_view)
 
     def gameWin(self):
+        time.sleep(1)
         """ Use a mouse press to advance to the 'game' view. """
         game_win_view = GameWinView(self)
         self.window.show_view(game_win_view)
@@ -240,8 +246,8 @@ class GameView(arcade.View):
         # self.enemy_sprite = arcade.Sprite("assets/barrilFixo.png", 1.5)
         self.enemy_sprite = barril.BarrilCharacter()
 
-        self.enemy_sprite.center_x = 180
-        self.enemy_sprite.center_y = 510
+        self.enemy_sprite.center_x = 195
+        self.enemy_sprite.center_y = 505
         # Set enemy initial speed
         self.enemy_sprite.change_x = 5
         # Set boundaries on the left/right the enemy can't cross
@@ -262,11 +268,14 @@ class GameView(arcade.View):
         # Loop through each bullet
         if not self.game_over and not self.game_win:
 
+            self.player_list.update_animation()
+
              # Have a random 1 in 200 change of shooting each 1/60th of a second
             odds = 100
             # Adjust odds based on delta-time
             adj_odds = int(odds * (1 / 60) / delta_time)
             if random.randrange(adj_odds) == 0 and len(self.enemy_list) < 7:
+                # self.cavaleiro_list.update_animation()
                 self.spawnBarril()
 
             # Update the players animation
@@ -298,7 +307,16 @@ class GameView(arcade.View):
 
                 # If it did, get rid of the bullet
                 if len(hit_list) > 0:
-                    enemy.remove_from_sprite_lists()
+
+                    temp_x = self.player_list[0].center_x 
+                    temp_y = self.player_list[0].center_y 
+                    # enemy.remove_from_sprite_lists()
+                    self.player_list[0] = arcade.Sprite("assets/player_death.png", 0.9)
+                    self.player_list[0].center_x = temp_x
+                    self.player_list[0].center_y = temp_y
+                    # self.player_sprite = arcade.Sprite(
+        #     "assets/playerFixo.png", 0.9,
+        # )
                     self.game_over = True
 
                 # If the bullet flies off-screen, remove it.
