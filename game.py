@@ -59,6 +59,8 @@ class GameView(arcade.View):
 
         self.background = None
 
+        self.setup()
+
     def setup(self):
         """Set up the game and initialize the variables."""
         self.game_over = False

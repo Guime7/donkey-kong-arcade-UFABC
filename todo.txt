@@ -10,3 +10,4 @@
 []  limpar o codigo
 []  arrumar as telas de inicio e fim de game
 []  adicionar sons
+[]  modo auto - gerar os barrils automaticamente

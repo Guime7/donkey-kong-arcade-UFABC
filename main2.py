@@ -1,26 +1,22 @@
 """
-Imports
+Example code showing how to create some of the
+different UIWidgets.
 """
-import time
 import arcade
 import arcade.gui
-import os
-import random
 import game
 
-"""
-Constantes
-"""
-#Tela
 SCREEN_WIDTH = 832
 SCREEN_HEIGHT = 640
-SCREEN_TITLE = "Donkey-Arcade-UFABC"
-# Physics
-class MainView(arcade.View):
-    """ Class that manages the 'menu' view. """
+SCREEN_TITLE = "DONKEY KONG ARCADE UFABC"
 
-    def on_show_view(self):
-        """ Called when switching to this view"""
+
+class MainView(arcade.Window):
+    def __init__(self):
+        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+
+        # --- Required for all code that uses UI element,
+        # a UIManager to handle the UI.
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
 
@@ -35,7 +31,7 @@ class MainView(arcade.View):
 
         # Create a text label
         ui_text_label = arcade.gui.UITextArea(text=SCREEN_TITLE,
-                                              width=500,
+                                              width=600,
                                               height=80,
                                               font_size=24,
                                               font_name="Kenney Future",
@@ -74,43 +70,46 @@ class MainView(arcade.View):
             "font_color": arcade.color.WHITE,
             "border_width": 2,
             "border_color": None,
-            "bg_color": arcade.color.BUD_GREEN,
+            "bg_color": arcade.color.UP_FOREST_GREEN,
 
             # used if button is pressed
             "bg_color_pressed": arcade.color.WHITE,
-            "border_color_pressed": arcade.color.BLACK,  # also used when hovered
-            "font_color_pressed": arcade.color.BLACK,
+            "border_color_pressed": arcade.color.GREEN,  # also used when hovered
+            "font_color_pressed": arcade.color.GREEN,
         }
+
         quit_style = {
             "font_name": ("Kenney Future", "arial"),
             "font_size": 15,
             "font_color": arcade.color.WHITE,
             "border_width": 2,
             "border_color": None,
-            "bg_color": arcade.color.UP_FOREST_GREEN,
+            "bg_color": arcade.color.BUD_GREEN,
 
             # used if button is pressed
             "bg_color_pressed": arcade.color.WHITE,
-            "border_color_pressed": arcade.color.BLACK,  # also used when hovered
-            "font_color_pressed": arcade.color.BLACK,
+            "border_color_pressed": arcade.color.GREEN,  # also used when hovered
+            "font_color_pressed": arcade.color.GREEN,
         }
         # Create a UIFlatButton
-        flatbutton_onePlayer = arcade.gui.UIFlatButton(text="1 jogador Pressione ENTER", width=270, height=60, style=default_style)
+        flatbutton_onePlayer = arcade.gui.UIFlatButton(text="1 jogador", width=200, style=default_style)
         self.v_box.add(flatbutton_onePlayer.with_space_around(bottom=20))
 
-        flatbutton_twoPlayer = arcade.gui.UIFlatButton(text="2 jogadores pressione SPACE", width=270,height=60, style=default_style)
+        flatbutton_twoPlayer = arcade.gui.UIFlatButton(text="2 jogadores", width=200, style=default_style)
         self.v_box.add(flatbutton_twoPlayer.with_space_around(bottom=20))
 
         # Handle Clicks
         @flatbutton_onePlayer.event("on_click")
         def on_click_flatbutton(event):
+            print("UIFlatButton2 pressed", event)
+            self.manager.disable()
             game_view = game.GameView()
-            # game_view.setup()
+            game_view.setup()
             self.window.show_view(game_view)
 
         @flatbutton_twoPlayer.event("on_click")
         def on_click_flatbutton(event):
-            print("UIFlatButton2 pressed")
+            print("UIFlatButton2 pressed", event)
 
         # Create a UITextureButton
         # texture = arcade.load_texture(":resources:onscreen_controls/flat_dark/play.png")
@@ -138,23 +137,6 @@ class MainView(arcade.View):
                                             self.background, alpha=80)
         self.manager.draw()
 
-       
-    def on_key_press(self, key, modifiers):
-        """ Use a mouse press to advance to the 'game' view. """
-        if key == arcade.key.ENTER:
-            game_view = game.GameView()
-            # game_view.setup()
-            self.window.show_view(game_view)
-    
-    
 
-def main():
-    """ Startup """
-    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    main_view = MainView()
-    window.show_view(main_view)
-    arcade.run()
-
-
-if __name__ == "__main__":
-    main()
+window = MainView()
+arcade.run()
