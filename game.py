@@ -221,27 +221,6 @@ class GameView(arcade.View):
             self.player_sprite.change_x = -MOVEMENT_SPEED
         elif key == arcade.key.RIGHT:
             self.player_sprite.change_x = MOVEMENT_SPEED
-
-
-        # gerar ininigo
-        if key == arcade.key.SPACE and len(self.enemy_list) < 6:          
-            self.enemy_sprite = arcade.Sprite("assets/barrilFixo.png", 1.5)
-
-            self.enemy_sprite.center_x = 180
-            self.enemy_sprite.center_y = 510
-
-            # Set enemy initial speed
-            self.enemy_sprite.change_x = 5
-            # Set boundaries on the left/right the enemy can't cross
-            self.enemy_sprite.boundary_right = 680
-            self.enemy_sprite.boundary_left = 140  
-            self.enemy_sprite.boundary_bottom = -350
-            self.physics_engine_enemy = arcade.PhysicsEnginePlatformer(
-                self.enemy_sprite, self.walls, gravity_constant=GRAVITY
-            )
-            
-            self.physics_engine_enemy_list.append(self.physics_engine_enemy)
-            self.enemy_list.append(self.enemy_sprite)
            
 
     def gameOver(self):
@@ -267,12 +246,39 @@ class GameView(arcade.View):
         elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
             self.player_sprite.change_x = 0
 
+    def spawnBarril(self):
+        # gerar ininigo
+              
+        self.enemy_sprite = arcade.Sprite("assets/barrilFixo.png", 1.5)
+
+        self.enemy_sprite.center_x = 180
+        self.enemy_sprite.center_y = 510
+        # Set enemy initial speed
+        self.enemy_sprite.change_x = 5
+        # Set boundaries on the left/right the enemy can't cross
+        self.enemy_sprite.boundary_right = 680
+        self.enemy_sprite.boundary_left = 140  
+        self.enemy_sprite.boundary_bottom = -350
+        self.physics_engine_enemy = arcade.PhysicsEnginePlatformer(
+            self.enemy_sprite, self.walls, gravity_constant=GRAVITY
+        )
+            
+        self.physics_engine_enemy_list.append(self.physics_engine_enemy)
+        self.enemy_list.append(self.enemy_sprite)
+
 
     def on_update(self, delta_time):
         """Movement and game logic"""
 
         # Loop through each bullet
         if not self.game_over and not self.game_win:
+
+             # Have a random 1 in 200 change of shooting each 1/60th of a second
+            odds = 100
+            # Adjust odds based on delta-time
+            adj_odds = int(odds * (1 / 60) / delta_time)
+            if random.randrange(adj_odds) == 0 and len(self.enemy_list) < 7:
+                self.spawnBarril()
 
             # Generate a list of all sprites that collided with the player.
             hit_list_vitoria = arcade.check_for_collision_with_list(self.player_sprite, self.vitoria_list)
