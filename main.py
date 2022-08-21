@@ -98,10 +98,6 @@ class MainView(arcade.View):
         # Create a UIFlatButton
         flatbutton_onePlayer = arcade.gui.UIFlatButton(text="1 jogador Pressione ENTER", width=270, height=60, style=default_style)
         self.v_box.add(flatbutton_onePlayer.with_space_around(bottom=20))
-
-        flatbutton_twoPlayer = arcade.gui.UIFlatButton(text="2 jogadores pressione SPACE", width=270,height=60, style=default_style)
-        self.v_box.add(flatbutton_twoPlayer.with_space_around(bottom=20))
-
         # Handle Clicks
         @flatbutton_onePlayer.event("on_click")
         def on_click_flatbutton(event):
@@ -109,9 +105,14 @@ class MainView(arcade.View):
             # game_view.setup()
             self.window.show_view(game_view)
 
-        @flatbutton_twoPlayer.event("on_click")
-        def on_click_flatbutton(event):
-            print("UIFlatButton2 pressed")
+
+        #Modo dois jogadores em construção
+        # flatbutton_twoPlayer = arcade.gui.UIFlatButton(text="2 jogadores pressione SPACE", width=270,height=60, style=default_style)
+        # self.v_box.add(flatbutton_twoPlayer.with_space_around(bottom=20))
+        # @flatbutton_twoPlayer.event("on_click")
+        # def on_click_flatbutton(event):
+        #     print("UIFlatButton2 pressed")
+
 
         # Create a UITextureButton
         # texture = arcade.load_texture(":resources:onscreen_controls/flat_dark/play.png")

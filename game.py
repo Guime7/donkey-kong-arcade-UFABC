@@ -4,7 +4,7 @@ Imports
 import time
 import arcade
 from gameOver import *
-
+import barril
 """
 Constantes
 """
@@ -98,10 +98,8 @@ class GameView(arcade.View):
         )
 
         # Starting position of the player
-        # self.vitoria_sprite.center_x = 375
-        # self.vitoria_sprite.center_y = 600
-        self.vitoria_sprite.center_x = 200
-        self.vitoria_sprite.center_y = 50
+        self.vitoria_sprite.center_x = 375
+        self.vitoria_sprite.center_y = 600
         self.vitoria_list.append(self.vitoria_sprite)
         
 
@@ -124,19 +122,7 @@ class GameView(arcade.View):
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
         
-        self.background = arcade.load_texture("assets/background.png")
-
-        # -- Draw an enemy on the ground
-        # self.enemy_sprite = arcade.AnimatedTimeBasedSprite()
-        # self.enemy_sprite.textures = []
-
-        # for i in range(7):
-        # self.enemy_sprite.textures.append(arcade.load_texture("assets/barril.png", x=0,y=0,width=28,height=20))
-        # self.enemy_sprite = arcade.Sprite(
-        #     "assets/barrilFixo.png",
-        #     PLAYER_SCALING,
-        # )
-        
+        self.background = arcade.load_texture("assets/background.png")     
       
          # Keep player from running through the wall_list layer
         self.walls = [self.wall_list]
@@ -251,7 +237,8 @@ class GameView(arcade.View):
     def spawnBarril(self):
         # gerar ininigo
               
-        self.enemy_sprite = arcade.Sprite("assets/barrilFixo.png", 1.5)
+        # self.enemy_sprite = arcade.Sprite("assets/barrilFixo.png", 1.5)
+        self.enemy_sprite = barril.BarrilCharacter()
 
         self.enemy_sprite.center_x = 180
         self.enemy_sprite.center_y = 510
@@ -281,6 +268,10 @@ class GameView(arcade.View):
             adj_odds = int(odds * (1 / 60) / delta_time)
             if random.randrange(adj_odds) == 0 and len(self.enemy_list) < 7:
                 self.spawnBarril()
+
+            # Update the players animation
+            self.enemy_list.update_animation()
+
 
             # Generate a list of all sprites that collided with the player.
             hit_list_vitoria = arcade.check_for_collision_with_list(self.player_sprite, self.vitoria_list)
