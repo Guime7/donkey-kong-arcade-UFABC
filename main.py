@@ -25,6 +25,7 @@ class MainView(arcade.View):
         self.manager.enable()
 
         self.background = arcade.load_texture("assets/background.png")
+        arcade.set_background_color(arcade.color.BLACK)
 
         # Set background color
         # arcade.set_background_color(arcade.color.DARK_BLUE_GRAY)
@@ -145,8 +146,12 @@ class MainView(arcade.View):
             game_view = game.GameView()
             # game_view.setup()
             self.window.show_view(game_view)
-    
-    
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        game_view = game.GameView()
+        # game_view.setup()
+        self.window.show_view(game_view)
+
 
 def main():
     """ Startup """

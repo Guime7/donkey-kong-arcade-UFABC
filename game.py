@@ -98,8 +98,10 @@ class GameView(arcade.View):
         )
 
         # Starting position of the player
-        self.vitoria_sprite.center_x = 375
-        self.vitoria_sprite.center_y = 600
+        # self.vitoria_sprite.center_x = 375
+        # self.vitoria_sprite.center_y = 600
+        self.vitoria_sprite.center_x = 200
+        self.vitoria_sprite.center_y = 50
         self.vitoria_list.append(self.vitoria_sprite)
         
 

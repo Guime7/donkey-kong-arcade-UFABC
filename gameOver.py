@@ -16,16 +16,27 @@ Constantes
 class GameOverView(arcade.View):
     def __init__(self, game_view):
         super().__init__()
-        self.backMenuTimer = 0
         self.game_view = game_view
         self.player_list = arcade.SpriteList()
         self.player_sprite = arcade.Sprite(
-            "assets/playerFixo.png", 4,
+            "assets/gameOverPlayer.png", 3,
         )
         # Starting position of the player
-        self.player_sprite.center_x = SCREEN_WIDTH / 2
+        self.player_sprite.center_x = 500
+        self.player_sprite.center_y = 330
+        self.player_list.append(self.player_sprite)
+
+
+        #cavaleiro sprite
+        self.player_sprite = arcade.Sprite(
+            "assets/gameOverCavaleiro.png", 3,
+        )
+        # Starting position of the player
+        self.player_sprite.center_x = 350
         self.player_sprite.center_y = 350
         self.player_list.append(self.player_sprite)
+
+
     """ Class to manage the game over view """
     def on_show_view(self):
         """ Called when switching to this view"""
@@ -45,10 +56,7 @@ class GameOverView(arcade.View):
                          arcade.color.WHITE, 16, anchor_x="center")
         arcade.draw_text("Pressione ESC para voltar ao menu.", SCREEN_WIDTH / 2, 120,
                          arcade.color.WHITE, 16, anchor_x="center")
-        self.player_list.draw()
-
-    
-        
+        self.player_list.draw()  
 
     def on_key_press(self, key, modifiers):
         """ Use a mouse press to advance to the 'game' view. """
@@ -59,24 +67,45 @@ class GameOverView(arcade.View):
         elif key == arcade.key.ESCAPE:
             menu_view = MainView()
             self.window.show_view(menu_view)
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        menu_view = MainView()
+        self.window.show_view(menu_view)
              
 class GameWinView(arcade.View):
     def __init__(self, game_view):
         super().__init__()
         self.game_view = game_view
+
     """ Class to manage the game over view """
     def on_show_view(self):
         """ Called when switching to this view"""
-        arcade.set_background_color(arcade.color.GREEN)
+        arcade.set_background_color(arcade.color.UP_FOREST_GREEN)
 
     def on_draw(self):
         """ Draw the game over view """
         self.clear()
-        arcade.draw_text("Você Ganhou um Azão - press ESCAPE to advance", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
+        arcade.draw_text("VOCÊ TIROU UM AZÃO!!", SCREEN_WIDTH / 2,430,
                          arcade.color.WHITE, 30, anchor_x="center")
 
-    def on_key_press(self, key, _modifiers):
-        """ If user hits escape, go back to the main menu view """
-        if key == arcade.key.ESCAPE:
+
+
+        arcade.draw_text("Pressione ENTER para tentar denovo.", SCREEN_WIDTH / 2, 150,
+                         arcade.color.WHITE, 16, anchor_x="center")
+        arcade.draw_text("Pressione ESC para voltar ao menu.", SCREEN_WIDTH / 2, 120,
+                         arcade.color.WHITE, 16, anchor_x="center")
+       
+
+    def on_key_press(self, key, modifiers):
+        """ Use a mouse press to advance to the 'game' view. """
+        if key == arcade.key.ENTER:
+            game_view = game.GameView()
+            # game_view.setup()
+            self.window.show_view(game_view)
+        elif key == arcade.key.ESCAPE:
             menu_view = MainView()
             self.window.show_view(menu_view)
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        menu_view = MainView()
+        self.window.show_view(menu_view)

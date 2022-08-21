@@ -1,13 +1,13 @@
 [ok]  Fazer o mapa ter fisica
-[]  fazer o player se mover animação de sprites e pular
 [ok]  programar os inimigos (barril) para percorrer o mapa
 [ok]  programar as ações de derrota do player ao tocar no barril e cair no buraco
 [despriorizado]  score para conta qnts barril pulou
-[]  animar e programar o "segundo player" que vai jogar os barril
 [ok]  animar o playerr para subir as escadas
 [despriorizado]  Extra: inverter o lado dos jogadores caso o q esta subindo perca 
 [ok]  reiniciar o jogo e animação de derrota
-[]  limpar o codigo
-[]  arrumar as telas de inicio e fim de game
-[]  adicionar sons
+[ok]  arrumar as telas de inicio e fim de game
 [ok]  modo auto - gerar os barrils automaticamente
+[]  animar e programar o "segundo player" que vai jogar os barril
+[]  fazer o player se mover animação de sprites e pular
+[]  adicionar sons
+[]  limpar o codigo
