@@ -1,13 +1,12 @@
 """
 Imports
 """
-import time
 import arcade
-import os
-import random
-from game import *
-from main import *
-import datetime
+import src.game as game
+import src.main as main
+import src.main as main
+
+
 
 """
 Constantes
@@ -16,12 +15,12 @@ Constantes
 class GameOverView(arcade.View):
     def __init__(self, game_view):
         super().__init__()
-        self.derrota_sound =    arcade.load_sound("assets/derrota.wav")
+        self.derrota_sound =    arcade.load_sound("assets/sounds/derrota.wav")
         arcade.play_sound(self.derrota_sound)
         self.game_view = game_view
         self.player_list = arcade.SpriteList()
         self.player_sprite = arcade.Sprite(
-            "assets/gameOverPlayer.png", 3,
+            "assets/images/gameOverPlayer.png", 3,
         )
         # Starting position of the player
         self.player_sprite.center_x = 500
@@ -31,7 +30,7 @@ class GameOverView(arcade.View):
 
         #cavaleiro sprite
         self.player_sprite = arcade.Sprite(
-            "assets/gameOverCavaleiro.png", 3,
+            "assets/images/gameOverCavaleiro.png", 3,
         )
         # Starting position of the player
         self.player_sprite.center_x = 350
@@ -47,16 +46,16 @@ class GameOverView(arcade.View):
     def on_draw(self):
         """ Draw the game over view """
         self.clear()
-        arcade.draw_text("Game Over", SCREEN_WIDTH / 2,430,
+        arcade.draw_text("Game Over", main.SCREEN_WIDTH / 2,430,
                          arcade.color.WHITE, 30, anchor_x="center")
 
-        arcade.draw_text("Bobeu dançou, um F você tirou ;/", SCREEN_WIDTH / 2, 250,
+        arcade.draw_text("Bobeu dançou, um F você tirou ;/", main.SCREEN_WIDTH / 2, 250,
                          arcade.color.WHITE, 15, anchor_x="center")
         self.player_list.draw()
 
-        arcade.draw_text("Pressione ENTER para tentar denovo.", SCREEN_WIDTH / 2, 150,
+        arcade.draw_text("Pressione ENTER para tentar denovo.", main.SCREEN_WIDTH / 2, 150,
                          arcade.color.WHITE, 16, anchor_x="center")
-        arcade.draw_text("Pressione ESC para voltar ao menu.", SCREEN_WIDTH / 2, 120,
+        arcade.draw_text("Pressione ESC para voltar ao menu.", main.SCREEN_WIDTH / 2, 120,
                          arcade.color.WHITE, 16, anchor_x="center")
         self.player_list.draw()  
 
@@ -67,17 +66,17 @@ class GameOverView(arcade.View):
             # game_view.setup()
             self.window.show_view(game_view)
         elif key == arcade.key.ESCAPE:
-            menu_view = MainView()
+            menu_view = main.MainView()
             self.window.show_view(menu_view)
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
-        menu_view = MainView()
+        menu_view = main.MainView()
         self.window.show_view(menu_view)
              
 class GameWinView(arcade.View):
     def __init__(self, game_view):
         super().__init__()
-        self.vitoria_sound = arcade.load_sound("assets/vitoria.mp3")
+        self.vitoria_sound = arcade.load_sound("assets/sounds/vitoria.mp3")
         arcade.play_sound(self.vitoria_sound)
         self.game_view = game_view
 
@@ -89,14 +88,14 @@ class GameWinView(arcade.View):
     def on_draw(self):
         """ Draw the game over view """
         self.clear()
-        arcade.draw_text("VOCÊ TIROU UM AZÃO!!", SCREEN_WIDTH / 2,430,
+        arcade.draw_text("VOCÊ TIROU UM AZÃO!!", main.SCREEN_WIDTH / 2,430,
                          arcade.color.WHITE, 30, anchor_x="center")
 
 
 
-        arcade.draw_text("Pressione ENTER para tentar denovo.", SCREEN_WIDTH / 2, 150,
+        arcade.draw_text("Pressione ENTER para tentar denovo.", main.SCREEN_WIDTH / 2, 150,
                          arcade.color.WHITE, 16, anchor_x="center")
-        arcade.draw_text("Pressione ESC para voltar ao menu.", SCREEN_WIDTH / 2, 120,
+        arcade.draw_text("Pressione ESC para voltar ao menu.", main.SCREEN_WIDTH / 2, 120,
                          arcade.color.WHITE, 16, anchor_x="center")
        
 
@@ -107,9 +106,9 @@ class GameWinView(arcade.View):
             # game_view.setup()
             self.window.show_view(game_view)
         elif key == arcade.key.ESCAPE:
-            menu_view = MainView()
+            menu_view = main.MainView()
             self.window.show_view(menu_view)
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
-        menu_view = MainView()
+        menu_view = main.MainView()
         self.window.show_view(menu_view)

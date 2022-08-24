@@ -3,10 +3,12 @@ Imports
 """
 import time
 import arcade
-from gameOver import *
-import barril
-import cavaleiro
-import player
+import src.gameOver as gameOver
+import src.barril as barril
+import src.cavaleiro as cavaleiro
+import src.player as player
+import src.main as main
+import random
 """
 Constantes
 """
@@ -94,7 +96,7 @@ class GameView(arcade.View):
    
         # Set up the cavaleiro
         self.cavaleiro_sprite = arcade.Sprite(
-            "assets/cavaleiro_3.png", 1.2,
+            "assets/images/cavaleiro_3.png", 1.2,
         )
         # self.cavaleiro_sprite = cavaleiro.CavaleiroCharacter()
 
@@ -105,7 +107,7 @@ class GameView(arcade.View):
 
          # Set up the vitoria
         self.vitoria_sprite = arcade.Sprite(
-            "assets/barrilAVitoria.png", 1.5,
+            "assets/images/barrilAVitoria.png", 1.5,
         )
 
         # Starting position of the player
@@ -115,7 +117,7 @@ class GameView(arcade.View):
         
 
         # Estrutura das plataformas
-        map_name = "assets/map.json"
+        map_name = "assets/map/map.json"
         layer_options = {
             "caminho": {"use_spatial_hash": True},
             "escada": {"use_spatial_hash": True}
@@ -133,7 +135,7 @@ class GameView(arcade.View):
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
         
-        self.background = arcade.load_texture("assets/background.png")     
+        self.background = arcade.load_texture("assets/images/background.png")     
       
          # Keep player from running through the wall_list layer
         self.walls = [self.wall_list]
@@ -156,7 +158,7 @@ class GameView(arcade.View):
         arcade.start_render()
         # render background
         arcade.draw_lrwh_rectangle_textured(0, 0,
-                                            SCREEN_WIDTH, SCREEN_HEIGHT,
+                                            main.SCREEN_WIDTH, main.SCREEN_HEIGHT,
                                             self.background)
 
         # Start counting frames
@@ -225,13 +227,13 @@ class GameView(arcade.View):
         
     def gameOver(self):
         time.sleep(1)
-        game_over_view = GameOverView(self)
+        game_over_view = gameOver.GameOverView(self)
         self.window.show_view(game_over_view)
 
     def gameWin(self):
         time.sleep(1)
         """ Use a mouse press to advance to the 'game' view. """
-        game_win_view = GameWinView(self)
+        game_win_view = gameOver.GameWinView(self)
         self.window.show_view(game_win_view)
 
     def on_key_release(self, key, modifiers):
@@ -318,7 +320,7 @@ class GameView(arcade.View):
                     temp_x = self.player_list[0].center_x 
                     temp_y = self.player_list[0].center_y 
                     # enemy.remove_from_sprite_lists()
-                    self.player_list[0] = arcade.Sprite("assets/player_death.png", 0.9)
+                    self.player_list[0] = arcade.Sprite("assets/images/player_death.png", 0.9)
                     self.player_list[0].center_x = temp_x
                     self.player_list[0].center_y = temp_y
                     # self.player_sprite = arcade.Sprite(

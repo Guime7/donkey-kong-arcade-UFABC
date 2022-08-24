@@ -1,5 +1,5 @@
 import arcade
-import game
+import src.game as game
 
 
 CHARACTER_SCALING = 0.9
@@ -60,7 +60,7 @@ class PlayerCharacter(arcade.Sprite):
 
         # Images from Kenney.nl's Asset Pack 3
 
-        main_path = "assets/player"
+        main_path = "assets/images/player"
 
         # Load textures for idle standing
 

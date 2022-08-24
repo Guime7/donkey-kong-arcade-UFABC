@@ -1,9 +1,9 @@
 import arcade
 
 
-CHARACTER_SCALING = 1
+CHARACTER_SCALING = 1.5
 
-UPDATES_PER_FRAME = 4
+UPDATES_PER_FRAME = 15
 
 RIGHT_FACING = 0
 
@@ -27,7 +27,7 @@ def load_texture_pair(filename):
 
 
 
-class CavaleiroCharacter(arcade.Sprite):
+class BarrilCharacter(arcade.Sprite):
     def __init__(self):
 
         # Set up parent class
@@ -58,11 +58,11 @@ class CavaleiroCharacter(arcade.Sprite):
 
         # Images from Kenney.nl's Asset Pack 3
 
-        main_path = "assets/cavaleiro"
+        main_path = "assets/images/barril"
 
         # Load textures for idle standing
 
-        self.idle_texture_pair = load_texture_pair(f"{main_path}_idle.png")
+        self.idle_texture_pair = load_texture_pair(f"{main_path}_1.png")
 
         # Load textures for walking
 
@@ -72,7 +72,7 @@ class CavaleiroCharacter(arcade.Sprite):
         for i in range(1,5):
 
             texture = load_texture_pair(f"{main_path}_{i}.png")
-            print(load_texture_pair(f"{main_path}_{i}.png"))
+           
             self.walk_textures.append(texture)
 
 
@@ -83,23 +83,23 @@ class CavaleiroCharacter(arcade.Sprite):
 
         # Figure out if we need to flip face left or right
 
-        # if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
+        if self.change_x < 0 and self.character_face_direction == RIGHT_FACING:
 
-        #     self.character_face_direction = LEFT_FACING
+            self.character_face_direction = LEFT_FACING
 
-        # elif self.change_x > 0 and self.character_face_direction == LEFT_FACING:
+        elif self.change_x > 0 and self.character_face_direction == LEFT_FACING:
 
-        self.character_face_direction = RIGHT_FACING
+            self.character_face_direction = RIGHT_FACING
 
 
 
         # Idle animation
 
-        # if self.change_x == 0 and self.change_y == 0:
+        if self.change_x == 0 and self.change_y == 0:
 
-        #     self.texture = self.idle_texture_pair[self.character_face_direction]
+            self.texture = self.idle_texture_pair[self.character_face_direction]
 
-        #     return
+            return
 
 
 
@@ -107,7 +107,7 @@ class CavaleiroCharacter(arcade.Sprite):
 
         self.cur_texture += 1
 
-        if self.cur_texture > 0.5 * UPDATES_PER_FRAME:
+        if self.cur_texture > 3 * UPDATES_PER_FRAME:
 
             self.cur_texture = 0
 

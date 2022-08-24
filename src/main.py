@@ -1,12 +1,9 @@
 """
 Imports
 """
-import time
 import arcade
 import arcade.gui
-import os
-import random
-import game
+import src.game as game
 
 """
 Constantes
@@ -25,11 +22,12 @@ class MainView(arcade.View):
         self.manager.enable()
 
 
-        self.songs = "assets/intro.mp3"
+        self.songs = "assets/sounds/intro.mp3"
+
         self.my_music = arcade.load_sound(self.songs)
         self.media_player = self.my_music.play()
 
-        self.background = arcade.load_texture("assets/background.png")
+        self.background = arcade.load_texture("assets/images/background.png")
         arcade.set_background_color(arcade.color.BLACK)
 
         # Set background color
@@ -162,13 +160,13 @@ class MainView(arcade.View):
         self.media_player.pause()
 
 
-def main():
-    """ Startup """
-    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    main_view = MainView()
-    window.show_view(main_view)
-    arcade.run()
+# def main():
+#     """ Startup """
+#     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+#     main_view = MainView()
+#     window.show_view(main_view)
+#     arcade.run()
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

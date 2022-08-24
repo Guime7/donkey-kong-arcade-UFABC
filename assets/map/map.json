@@ -674,7 +674,7 @@
         {
          "columns":73,
          "firstgid":1,
-         "image":"..\/uteis\/plataformaOculta.png",
+         "image":"..\/..\/uteis\/plataformaOculta.png",
          "imageheight":384,
          "imagewidth":736,
          "margin":0,
@@ -687,7 +687,7 @@
         {
          "columns":416,
          "firstgid":2775,
-         "image":"background.png",
+         "image":"..\/images\/background.png",
          "imageheight":320,
          "imagewidth":416,
          "margin":0,
@@ -700,7 +700,7 @@
         {
          "columns":245,
          "firstgid":135895,
-         "image":"..\/uteis\/escadaOculta.png",
+         "image":"..\/..\/uteis\/escadaOculta.png",
          "imageheight":384,
          "imagewidth":736,
          "margin":0,
