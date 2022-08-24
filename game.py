@@ -62,6 +62,12 @@ class GameView(arcade.View):
 
         self.background = None
 
+        self.jump_sound = arcade.load_sound(":resources:sounds/jump3.wav")
+       
+       
+
+
+        # chamar setup
         self.setup()
 
     def setup(self):
@@ -206,6 +212,7 @@ class GameView(arcade.View):
                 self.player_sprite.change_y = MOVEMENT_SPEED
             elif self.physics_engine.can_jump():
                 self.player_sprite.change_y = JUMP_SPEED
+                arcade.play_sound(self.jump_sound)
                 # arcade.play_sound(self.jump_sound)
         elif key == arcade.key.DOWN:
             if self.physics_engine.is_on_ladder():

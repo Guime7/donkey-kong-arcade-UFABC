@@ -7,7 +7,7 @@
 [ok]  reiniciar o jogo e animação de derrota
 [ok]  arrumar as telas de inicio e fim de game
 [ok]  modo auto - gerar os barrils automaticamente
-[]  animar e programar o "segundo player" que vai jogar os barril
-[]  fazer o player se mover animação de sprites e pular
-[]  adicionar sons
+[ok]  animar e programar o "segundo player" que vai jogar os barril
+[ok]  fazer o player se mover animação de sprites e pular
+[ok]  adicionar sons
 []  limpar o codigo

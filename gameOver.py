@@ -16,6 +16,8 @@ Constantes
 class GameOverView(arcade.View):
     def __init__(self, game_view):
         super().__init__()
+        self.derrota_sound =    arcade.load_sound("assets/derrota.wav")
+        arcade.play_sound(self.derrota_sound)
         self.game_view = game_view
         self.player_list = arcade.SpriteList()
         self.player_sprite = arcade.Sprite(
@@ -75,6 +77,8 @@ class GameOverView(arcade.View):
 class GameWinView(arcade.View):
     def __init__(self, game_view):
         super().__init__()
+        self.vitoria_sound = arcade.load_sound("assets/vitoria.mp3")
+        arcade.play_sound(self.vitoria_sound)
         self.game_view = game_view
 
     """ Class to manage the game over view """

@@ -24,6 +24,11 @@ class MainView(arcade.View):
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
 
+
+        self.songs = "assets/intro.mp3"
+        self.my_music = arcade.load_sound(self.songs)
+        self.media_player = self.my_music.play()
+
         self.background = arcade.load_texture("assets/background.png")
         arcade.set_background_color(arcade.color.BLACK)
 
@@ -104,6 +109,7 @@ class MainView(arcade.View):
             game_view = game.GameView()
             # game_view.setup()
             self.window.show_view(game_view)
+            self.media_player.pause()
 
 
         #Modo dois jogadores em construção
@@ -147,11 +153,13 @@ class MainView(arcade.View):
             game_view = game.GameView()
             # game_view.setup()
             self.window.show_view(game_view)
+            self.media_player.pause()
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         game_view = game.GameView()
         # game_view.setup()
         self.window.show_view(game_view)
+        self.media_player.pause()
 
 
 def main():
