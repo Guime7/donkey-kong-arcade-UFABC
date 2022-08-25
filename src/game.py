@@ -75,8 +75,8 @@ class GameView(arcade.View):
         self.player_list2 = arcade.SpriteList()
     
         # Player sprite
-        self.player_sprite = player.PlayerCharacter()
-        self.player_sprite2 = player.PlayerCharacter()
+        self.player_sprite = player.PlayerCharacter(jogador=1)
+        self.player_sprite2 = player.PlayerCharacter(jogador=2)
 
         # Starting position of the player1
         self.player_sprite.center_x = 180
@@ -289,7 +289,7 @@ class GameView(arcade.View):
             odds = 100
             # Adjust odds based on delta-time
             adj_odds = int(odds * (1 / 60) / delta_time)
-            if random.randrange(adj_odds) == 0 and len(self.enemy_list) < 7:
+            if random.randrange(adj_odds) == 0 and len(self.enemy_list) < 5:
                 # self.cavaleiro_list.update_animation()
                 self.spawnBarril()
 
@@ -332,7 +332,7 @@ class GameView(arcade.View):
                     #mostrar a imagem de morto do player       
                     temp_x = self.player_list2[0].center_x 
                     temp_y = self.player_list2[0].center_y 
-                    self.player_list2[0] = arcade.Sprite("assets/images/player_death.png", 0.9)
+                    self.player_list2[0] = arcade.Sprite("assets/images/P2_death.png", 0.9)
                     self.player_list2[0].center_x = temp_x
                     self.player_list2[0].center_y = temp_y
 

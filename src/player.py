@@ -16,7 +16,7 @@ def load_texture_pair(filename):
     ]
 
 class PlayerCharacter(arcade.Sprite):
-    def __init__(self):
+    def __init__(self, jogador):
 
         # Set up parent class
         super().__init__()
@@ -34,25 +34,44 @@ class PlayerCharacter(arcade.Sprite):
 
         # --- Load Textures ---
         # Images from Kenney.nl's Asset Pack 3
-        main_path = "assets/images/player"
 
-        # Load textures for idle standing
-        self.idle_texture_pair = load_texture_pair(f"{main_path}_idle.png")
 
-        # Load textures for walking
-        self.walk_textures = []
-        self.ladder_textures = []
+        if(jogador == 1):
+            # Load textures for idle standing
+            main_path = "assets/images/player"
+            self.idle_texture_pair = load_texture_pair(f"{main_path}_idle.png")
 
-        #quando tiver andando normal
-        for i in range(1,5):
-            texture = load_texture_pair(f"{main_path}_{i}.png")
-            self.walk_textures.append(texture)
+            # Load textures for walking
+            self.walk_textures = []
+            self.ladder_textures = []
 
-        #para quando for subir escada
-        for i in range(1,3):
-            texture = load_texture_pair(f"{main_path}_escada_{i}.png")
-            self.ladder_textures.append(texture)
+            #quando tiver andando normal
+            for i in range(1,5):
+                texture = load_texture_pair(f"{main_path}_{i}.png")
+                self.walk_textures.append(texture)
 
+            #para quando for subir escada
+            for i in range(1,3):
+                texture = load_texture_pair(f"{main_path}_escada_{i}.png")
+                self.ladder_textures.append(texture)
+        else:
+            main_path = "assets/images/P2"
+            # Load textures for idle standing
+            self.idle_texture_pair = load_texture_pair(f"{main_path}_idle.png")
+
+            # Load textures for walking
+            self.walk_textures = []
+            self.ladder_textures = []
+
+            #quando tiver andando normal
+            for i in range(1,5):
+                texture = load_texture_pair(f"{main_path}_{i}.png")
+                self.walk_textures.append(texture)
+
+            #para quando for subir escada
+            for i in range(1,3):
+                texture = load_texture_pair(f"{main_path}_escada_{i}.png")
+                self.ladder_textures.append(texture)
 
     def update_animation(self, delta_time: float = 1 / 60):
 
