@@ -45,7 +45,7 @@ class GameOverView(arcade.View):
 
         arcade.draw_text("Game Over", main.SCREEN_WIDTH / 2,430,
                          arcade.color.WHITE, 30, anchor_x="center")
-        arcade.draw_text("Bobeu dançou, um F você tirou ;/", main.SCREEN_WIDTH / 2, 250,
+        arcade.draw_text("Bobeou dançou, um F você tirou ;/", main.SCREEN_WIDTH / 2, 250,
                          arcade.color.WHITE, 15, anchor_x="center")
 
         #desenhar player
