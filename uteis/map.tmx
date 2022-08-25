@@ -4,13 +4,13 @@
   <export target="../assets/map/map.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="plataforma" tilewidth="10" tileheight="10" tilecount="2774" columns="73">
-  <image source="plataformaOculta.png" width="736" height="384"/>
+  <image source="../assets/images/plataformaOculta.png" width="736" height="384"/>
  </tileset>
  <tileset firstgid="2775" name="backgroundImage" tilewidth="1" tileheight="1" tilecount="133120" columns="416">
   <image source="../assets/images/background.png" width="416" height="320"/>
  </tileset>
  <tileset firstgid="135895" name="escada" tilewidth="3" tileheight="3" tilecount="31360" columns="245">
-  <image source="escadaOculta.png" width="736" height="384"/>
+  <image source="../assets/images/escadaOculta.png" width="736" height="384"/>
  </tileset>
  <layer id="6" name="background" width="416" height="320">
   <data encoding="csv">

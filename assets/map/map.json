@@ -674,7 +674,7 @@
         {
          "columns":73,
          "firstgid":1,
-         "image":"..\/..\/uteis\/plataformaOculta.png",
+         "image":"..\/images\/plataformaOculta.png",
          "imageheight":384,
          "imagewidth":736,
          "margin":0,
@@ -700,7 +700,7 @@
         {
          "columns":245,
          "firstgid":135895,
-         "image":"..\/..\/uteis\/escadaOculta.png",
+         "image":"..\/images\/escadaOculta.png",
          "imageheight":384,
          "imagewidth":736,
          "margin":0,

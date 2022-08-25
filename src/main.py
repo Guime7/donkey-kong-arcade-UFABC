@@ -1,43 +1,34 @@
-"""
-Imports
-"""
+"""Imports"""
 import arcade
 import arcade.gui
 import src.game as game
 
-"""
-Constantes
-"""
-#Tela
+"""Constantes"""
 SCREEN_WIDTH = 832
 SCREEN_HEIGHT = 640
 SCREEN_TITLE = "Donkey-Arcade-UFABC"
-# Physics
+
 class MainView(arcade.View):
     """ Class that manages the 'menu' view. """
 
     def on_show_view(self):
         """ Called when switching to this view"""
+
+        #interface
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
-
-
-        self.songs = "assets/sounds/intro.mp3"
-
-        self.my_music = arcade.load_sound(self.songs)
-        self.media_player = self.my_music.play()
-
         self.background = arcade.load_texture("assets/images/background.png")
         arcade.set_background_color(arcade.color.BLACK)
 
-        # Set background color
-        # arcade.set_background_color(arcade.color.DARK_BLUE_GRAY)
-      
+        #musica
+        self.songs = "assets/sounds/intro.mp3"
+        self.my_music = arcade.load_sound(self.songs)
+        self.media_player = self.my_music.play()
 
         # Create a vertical BoxGroup to align buttons
         self.v_box = arcade.gui.UIBoxLayout()
 
-        # Create a text label
+        #titulo
         ui_text_label = arcade.gui.UITextArea(text=SCREEN_TITLE,
                                               width=500,
                                               height=80,
@@ -55,7 +46,6 @@ class MainView(arcade.View):
         self.v_box.add(ui_text_label.with_space_around(bottom=0))
 
         text2 = "Agora é tudo ou nada. Fuja dos \"Fs\" e alcance o tão suado \"A\" "
-
         ui_text_label = arcade.gui.UITextArea(text=text2,
                                               width=500,
                                               height=35,
@@ -71,7 +61,7 @@ class MainView(arcade.View):
                                               font_name="arial")
         self.v_box.add(ui_text_label.with_space_around(bottom=0))
 
-
+        #botaao
         default_style = {
             "font_name": ("Kenney Future", "arial"),
             "font_size": 15,
@@ -79,12 +69,11 @@ class MainView(arcade.View):
             "border_width": 2,
             "border_color": None,
             "bg_color": arcade.color.BUD_GREEN,
-
-            # used if button is pressed
             "bg_color_pressed": arcade.color.WHITE,
             "border_color_pressed": arcade.color.BLACK,  # also used when hovered
             "font_color_pressed": arcade.color.BLACK,
         }
+
         quit_style = {
             "font_name": ("Kenney Future", "arial"),
             "font_size": 15,
@@ -92,39 +81,23 @@ class MainView(arcade.View):
             "border_width": 2,
             "border_color": None,
             "bg_color": arcade.color.UP_FOREST_GREEN,
-
-            # used if button is pressed
             "bg_color_pressed": arcade.color.WHITE,
             "border_color_pressed": arcade.color.BLACK,  # also used when hovered
             "font_color_pressed": arcade.color.BLACK,
         }
-        # Create a UIFlatButton
-        flatbutton_onePlayer = arcade.gui.UIFlatButton(text="1 jogador Pressione ENTER", width=270, height=60, style=default_style)
+
+        # botao de incio
+        flatbutton_onePlayer = arcade.gui.UIFlatButton(text="Trabalho em grupo :(", width=270, height=60, style=default_style)
         self.v_box.add(flatbutton_onePlayer.with_space_around(bottom=20))
-        # Handle Clicks
         @flatbutton_onePlayer.event("on_click")
         def on_click_flatbutton(event):
             game_view = game.GameView()
-            # game_view.setup()
             self.window.show_view(game_view)
             self.media_player.pause()
 
-
-        #Modo dois jogadores em construção
-        # flatbutton_twoPlayer = arcade.gui.UIFlatButton(text="2 jogadores pressione SPACE", width=270,height=60, style=default_style)
-        # self.v_box.add(flatbutton_twoPlayer.with_space_around(bottom=20))
-        # @flatbutton_twoPlayer.event("on_click")
-        # def on_click_flatbutton(event):
-        #     print("UIFlatButton2 pressed")
-
-
-        # Create a UITextureButton
-        # texture = arcade.load_texture(":resources:onscreen_controls/flat_dark/play.png")
-        # ui_texture_button = arcade.gui.UITextureButton(texture=texture)
-
+        #botao de sair
         flatbutton_quit = arcade.gui.UIFlatButton(text="Quit", width=200, style=quit_style)
         self.v_box.add(flatbutton_quit.with_space_around(bottom=20))
-
         @flatbutton_quit.event("on_click")
         def on_click_flatbutton(event):
             arcade.exit()
@@ -145,6 +118,7 @@ class MainView(arcade.View):
         self.manager.draw()
 
        
+    #para iniciar o jogo ao clicar na tela
     def on_key_press(self, key, modifiers):
         """ Use a mouse press to advance to the 'game' view. """
         if key == arcade.key.ENTER:
@@ -152,21 +126,3 @@ class MainView(arcade.View):
             # game_view.setup()
             self.window.show_view(game_view)
             self.media_player.pause()
-
-    def on_mouse_press(self, _x, _y, _button, _modifiers):
-        game_view = game.GameView()
-        # game_view.setup()
-        self.window.show_view(game_view)
-        self.media_player.pause()
-
-
-# def main():
-#     """ Startup """
-#     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-#     main_view = MainView()
-#     window.show_view(main_view)
-#     arcade.run()
-
-
-# if __name__ == "__main__":
-#     main()
